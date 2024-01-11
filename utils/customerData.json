@@ -1,0 +1,17 @@
+{
+  "credentials": {
+    "email": "testis@mail.com",
+    "password": "Test12345"
+  },
+  "personalInfo": {
+    "cardNumber": "1111 1111 1111 1111 1111",
+    "expMonth": "02",
+    "expYear": "26",
+    "cvv": "111",
+    "cardholder": "Testis Testic"
+  },
+  "shippingInfo": {
+    "countrySearchSubstring": "ire",
+    "country": "Ireland"
+  }
+}

@@ -1,25 +1,12 @@
 const { test, expect } = require("@playwright/test");
 const { POMManager } = require("../pom/pomManager");
+const { JSONUtils } = require("../utils/jsonUtils");
 
-const credentials = {
-  email: "testis@mail.com",
-  password: "Test12345",
-};
+const parser = new JSONUtils();
+const customer = parser.parseRequiredJSON("../utils/customerData.json");
+const order = parser.parseRequiredJSON("../utils/orderData.json");
 
-const product = "Zara Coat 3";
-const personalInfoData = {
-  cardNumber: "1111 1111 1111 1111 1111",
-  expMonth: "02",
-  expYear: "26",
-  cvv: "111",
-  cardholder: "Testis Testic",
-};
-const shippingInfoData = {
-  countrySearchSubstring: "ire",
-  country: "Ireland",
-};
-
-test.only("ordering - happy flow", async ({ page }) => {
+test("ordering - happy flow", async ({ page }) => {
   const pomManager = new POMManager(page);
 
   const [
@@ -40,10 +27,10 @@ test.only("ordering - happy flow", async ({ page }) => {
 
   //  login
   await loginPage.goToLoginPage();
-  await loginPage.validLogin(credentials);
+  await loginPage.validLogin(customer.credentials);
 
   //  dashboard - add specific product to cart
-  await dashboardPage.addProductToCart(product);
+  await dashboardPage.addProductToCart(order.product.name);
 
   //  cart - verify that product is added to cart
   await navbar.navigateToCart();
@@ -52,13 +39,13 @@ test.only("ordering - happy flow", async ({ page }) => {
 
   //  checkout - verify email info
   expect(checkoutPage.shippingInfoSection.locator("label").first()).toHaveText(
-    credentials.email
+    customer.credentials.email
   );
 
   //  checkout - enter personal and shipping info
   await cartPage.navigateToCheckout();
-  await checkoutPage.enterPersonalInfo(personalInfoData);
-  await checkoutPage.enterShippingInfo(shippingInfoData);
+  await checkoutPage.enterPersonalInfo(customer.personalInfo);
+  await checkoutPage.enterShippingInfo(customer.shippingInfo);
 
   //  place order
   await checkoutPage.submitOrder();
