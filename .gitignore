@@ -5,3 +5,5 @@ node_modules/
 /playwright/.cache/
 state.json
 tests/*snapshots
+/allure-results/
+/allure-report/
