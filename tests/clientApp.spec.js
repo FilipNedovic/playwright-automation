@@ -9,7 +9,7 @@ const order = parser.parseRequiredJSON("../utils/orderData.json");
 
 test.describe.configure({ mode: "serial" });
 customers.forEach((customer, index) => {
-  test(`${index} ordering - happy flow`, async ({ page }) => {
+  test(`@RunMe ${index} ordering - happy flow`, async ({ page }) => {
     const pomManager = new POMManager(page);
 
     const [
@@ -67,33 +67,36 @@ customers.forEach((customer, index) => {
   });
 });
 
-customTest("pulling test data via fixture", async ({ page, testData }) => {
-  const pomManager = new POMManager(page);
+customTest(
+  "@RunMe pulling test data via fixture",
+  async ({ page, testData }) => {
+    const pomManager = new POMManager(page);
 
-  const [loginPage, dashboardPage, cartPage, checkoutPage, navbar] = [
-    pomManager.getLoginPage(),
-    pomManager.getDashboardPage(),
-    pomManager.getCartPage(),
-    pomManager.getCheckoutPage(),
-    pomManager.getNavbar(),
-  ];
+    const [loginPage, dashboardPage, cartPage, checkoutPage, navbar] = [
+      pomManager.getLoginPage(),
+      pomManager.getDashboardPage(),
+      pomManager.getCartPage(),
+      pomManager.getCheckoutPage(),
+      pomManager.getNavbar(),
+    ];
 
-  //  login
-  await loginPage.goToLoginPage();
-  await loginPage.validLogin(testData.credentials);
+    //  login
+    await loginPage.goToLoginPage();
+    await loginPage.validLogin(testData.credentials);
 
-  //  dashboard - add specific product to cart
-  await dashboardPage.addProductToCart(testData.productName);
-  await page.pause();
+    //  dashboard - add specific product to cart
+    await dashboardPage.addProductToCart(testData.productName);
+    await page.pause();
 
-  //  cart - verify that product is added to cart
-  await navbar.navigateToCart();
-  const bool = page.locator("h3:has-text('Zara Coat 3')").isVisible();
-  expect(bool).toBeTruthy();
+    //  cart - verify that product is added to cart
+    await navbar.navigateToCart();
+    const bool = page.locator("h3:has-text('Zara Coat 3')").isVisible();
+    expect(bool).toBeTruthy();
 
-  //  checkout - verify email info
-  await cartPage.navigateToCheckout();
-  expect(checkoutPage.shippingInfoSection.locator("label").first()).toHaveText(
-    testData.credentials.email
-  );
-});
+    //  checkout - verify email info
+    await cartPage.navigateToCheckout();
+    expect(
+      checkoutPage.shippingInfoSection.locator("label").first()
+    ).toHaveText(testData.credentials.email);
+  }
+);

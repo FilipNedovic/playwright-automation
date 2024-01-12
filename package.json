@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test tests/webApiPart1.spec.js",
+    "test:tagged": "npx playwright test --grep @RunMe",
     "test:safari": "npx playwright test tests/clientApp.spec.js --config playwright.customConfig.js --project=webkit"
   },
   "keywords": [],
