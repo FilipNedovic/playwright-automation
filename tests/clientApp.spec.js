@@ -7,6 +7,7 @@ const parser = new JSONUtils();
 const customers = parser.parseRequiredJSON("../utils/customerData.json");
 const order = parser.parseRequiredJSON("../utils/orderData.json");
 
+test.describe.configure({ mode: "serial" });
 customers.forEach((customer, index) => {
   test(`${index} ordering - happy flow`, async ({ page }) => {
     const pomManager = new POMManager(page);
