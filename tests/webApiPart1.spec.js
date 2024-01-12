@@ -38,12 +38,12 @@ test("ordering flow", async ({ page }) => {
   }
 
   //  verify that product is added to cart
-  await page.locator("[routerlink*='cart']").click();
-  await page.locator("div li").first().waitFor();
-
-  const bool = page.locator("h3:has-text('Zara Coat 3')").isVisible();
-  expect(bool).toBeTruthy();
-  await page.locator("text=Checkout").click();
+  await Promise.all([
+    page.locator("[routerlink*='cart']").click(),
+    page.locator("div li").first().waitFor(),
+    expect(page.locator("h3:has-text('Zara Coat 3')").isVisible()).toBeTruthy(),
+    page.locator("text=Checkout").click(),
+  ]);
 
   const personalInfo = page.locator(".payment__cc");
   const shippingInfo = page.locator(".payment__shipping");

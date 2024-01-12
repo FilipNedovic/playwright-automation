@@ -6,8 +6,10 @@ class Navbar {
   }
 
   async navigateToCart() {
-    await this.cart.click();
-    await this.page.locator("div li").first().waitFor();
+    await Promise.all([
+      this.cart.click(),
+      this.page.locator("div li").first().waitFor(),
+    ]);
   }
 
   async navigateToOrdersHistory() {

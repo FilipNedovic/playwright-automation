@@ -51,11 +51,11 @@ test("UI Controls", async ({ page }) => {
     //   console.log(await userRadioBtn.isChecked()),
     expect(userRadioBtn).toBeChecked(),
   ]);
-  await terms.click();
-  await expect(terms).toBeChecked();
-  await terms.uncheck();
-  expect(await terms.isChecked()).toBeFalsy();
-  await expect(documentLink).toHaveAttribute("class", "blinkingText");
+  terms.click();
+  expect(terms).toBeChecked();
+  terms.uncheck();
+  expect(terms.isChecked()).toBeFalsy();
+  expect(documentLink).toHaveAttribute("class", "blinkingText");
 });
 
 test("Child windows handling", async ({ browser }) => {
