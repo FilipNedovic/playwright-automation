@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+const { customTest } = require("../utils/testBase");
 const { POMManager } = require("../pom/pomManager");
 const { JSONUtils } = require("../utils/jsonUtils");
 
@@ -40,12 +41,12 @@ customers.forEach((customer, index) => {
     expect(bool).toBeTruthy();
 
     //  checkout - verify email info
+    await cartPage.navigateToCheckout();
     expect(
       checkoutPage.shippingInfoSection.locator("label").first()
     ).toHaveText(customer.credentials.email);
 
     //  checkout - enter personal and shipping info
-    await cartPage.navigateToCheckout();
     await checkoutPage.enterPersonalInfo(customer.personalInfo);
     await checkoutPage.enterShippingInfo(customer.shippingInfo);
 
@@ -63,4 +64,35 @@ customers.forEach((customer, index) => {
     await navbar.navigateToOrdersHistory();
     await ordersHistoryPage.verifyPlacedOrder(orderId);
   });
+});
+
+customTest("pulling test data via fixture", async ({ page, testData }) => {
+  const pomManager = new POMManager(page);
+
+  const [loginPage, dashboardPage, cartPage, checkoutPage, navbar] = [
+    pomManager.getLoginPage(),
+    pomManager.getDashboardPage(),
+    pomManager.getCartPage(),
+    pomManager.getCheckoutPage(),
+    pomManager.getNavbar(),
+  ];
+
+  //  login
+  await loginPage.goToLoginPage();
+  await loginPage.validLogin(testData.credentials);
+
+  //  dashboard - add specific product to cart
+  await dashboardPage.addProductToCart(testData.productName);
+  await page.pause();
+
+  //  cart - verify that product is added to cart
+  await navbar.navigateToCart();
+  const bool = page.locator("h3:has-text('Zara Coat 3')").isVisible();
+  expect(bool).toBeTruthy();
+
+  //  checkout - verify email info
+  await cartPage.navigateToCheckout();
+  expect(checkoutPage.shippingInfoSection.locator("label").first()).toHaveText(
+    testData.credentials.email
+  );
 });
