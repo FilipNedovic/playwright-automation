@@ -1,17 +1,36 @@
-{
-  "credentials": {
-    "email": "testis@mail.com",
-    "password": "Test12345"
+[
+  {
+    "credentials": {
+      "email": "testis@mail.com",
+      "password": "Test12345"
+    },
+    "personalInfo": {
+      "cardNumber": "1111 1111 1111 1111 1111",
+      "expMonth": "02",
+      "expYear": "26",
+      "cvv": "111",
+      "cardholder": "Testis Testic"
+    },
+    "shippingInfo": {
+      "countrySearchSubstring": "ire",
+      "country": "Ireland"
+    }
   },
-  "personalInfo": {
-    "cardNumber": "1111 1111 1111 1111 1111",
-    "expMonth": "02",
-    "expYear": "26",
-    "cvv": "111",
-    "cardholder": "Testis Testic"
-  },
-  "shippingInfo": {
-    "countrySearchSubstring": "ire",
-    "country": "Ireland"
+  {
+    "credentials": {
+      "email": "testis2@mail.com",
+      "password": "Test54321"
+    },
+    "personalInfo": {
+      "cardNumber": "2222 2222 2222 2222 2222",
+      "expMonth": "03",
+      "expYear": "27",
+      "cvv": "222",
+      "cardholder": "Mestis Mestic"
+    },
+    "shippingInfo": {
+      "countrySearchSubstring": "fra",
+      "country": "France"
+    }
   }
-}
+]
