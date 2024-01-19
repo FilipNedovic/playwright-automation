@@ -1,41 +1,41 @@
 class APIUtils {
-  constructor(apiContext, loginPayload) {
-    this.apiContext = apiContext;
-    this.loginPayload = loginPayload;
+  constructor (apiContext, loginPayload) {
+    this.apiContext = apiContext
+    this.loginPayload = loginPayload
   }
 
-  async getToken() {
+  async getToken () {
     const response = await this.apiContext.post(
-      "https://rahulshettyacademy.com/api/ecom/auth/login",
+      'https://rahulshettyacademy.com/api/ecom/auth/login',
       {
-        data: this.loginPayload,
+        data: this.loginPayload
       }
-    );
-    const responseJson = await response.json();
+    )
+    const responseJson = await response.json()
 
-    return responseJson.token;
+    return responseJson.token
   }
 
-  async createOrder(orderPayload) {
-    let response = {};
-    response.token = await this.getToken();
+  async createOrder (orderPayload) {
+    const response = {}
+    response.token = await this.getToken()
 
     const orderResponse = await this.apiContext.post(
-      "https://rahulshettyacademy.com/api/ecom/order/create-order",
+      'https://rahulshettyacademy.com/api/ecom/order/create-order',
       {
         headers: {
           Authorization: response.token,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        data: orderPayload,
+        data: orderPayload
       }
-    );
+    )
 
-    const responseJson = await orderResponse.json();
-    response.orderId = responseJson.orders[0];
+    const responseJson = await orderResponse.json()
+    response.orderId = responseJson.orders[0]
 
-    return response;
+    return response
   }
 }
 
-module.exports = { APIUtils };
+module.exports = { APIUtils }
