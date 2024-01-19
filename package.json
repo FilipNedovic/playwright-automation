@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npx playwright test",
     "test:tagged": "npx playwright test --grep @RunMe",
-    "test:safari": "npx playwright test tests/clientApp.spec.js --config playwright.customConfig.js --project=webkit"
+    "test:safari": "npx playwright test tests/clientApp.spec.js --config playwright.customConfig.js --project=webkit",
+    "lint:js": "eslint --fix **/*.js",
+    "lint:fix": "npm run lint:js"
   },
   "keywords": [],
   "author": "",
